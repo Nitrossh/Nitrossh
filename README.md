@@ -4,7 +4,7 @@
 - 💞️ I’m looking to collaborate on ...
 - 📫 How to reach me ...
 - 😄 Pronouns: Funky
-- ⚡ Fun fact: I got up at 3am today
+- ⚡ Fun fact: I never done this before. Im feeling like a pro!
 
 <!---
 Nitrossh/Nitrossh is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
