@@ -1,0 +1,62 @@
+name: Build clusters
+
+
+on:
+  push:
+    branches: [ main ]
+
+
+jobs:
+  build_2004:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Insecure API cluster
+        run: ansible-playbook insecure-port.yml
+      - name: remove insecure API kind cluster
+        run: kind delete cluster --name=insecureport
+      - name: Build etcd No Auth cluster 
+        run: ansible-playbook etcd-noauth.yml
+      - name: remove etcd no auth cluster
+        run: kind delete cluster --name=etcdnoauth
+      - name: build ro kubelet cluster
+        run: ansible-playbook rokubelet.yml
+      - name: remove ro kubelet cluster
+        run: kind delete cluster --name=rokubeletnoauth
+      - name: build rw kubelet cluster
+        run: ansible-playbook rwkubelet-noauth.yml
+      - name: remove rw kubelet cluster
+        run: kind delete cluster --name=rwkubeletnoauth
+      - name: build ssh to cluster admin cluster
+        run: ansible-playbook ssh-to-cluster-admin.yml
+      - name: remove ssh to cluster admin cluster
+        run: kind delete cluster --name=sshcm
+      - name: build ssh to create daemonsets
+        run: ansible-playbook ssh-to-create-daemonsets-hard.yml
+      - name: remove ssh to create daemonsets
+        run: kind delete cluster --name=sshcdh
+      - name: build ssh to create pods easy
+        run: ansible-playbook ssh-to-create-pods-easy.yml
+      - name: remove ssh to create pods easy
+        run: kind delete cluster --name=sshcpe
+      - name: build ssh to create pods hard
+        run: ansible-playbook ssh-to-create-pods-hard.yml
+      - name: remove ssh to create pods hard
+        run: kind delete cluster --name=sshcph
+      - name: build ssh to get secrets
+        run: ansible-playbook ssh-to-get-secrets.yml
+      - name: remove ssh to get secrets
+        run: kind delete cluster --name=sshgs
+      - name: build ssrf to insecure port
+        run: ansible-playbook ssrf-to-insecure-port.yml
+      - name: remove ssrf to insecure port
+        run: kind delete cluster --name=ssrfinsecureport
+      - name: build tiller noauth
+        run: ansible-playbook tiller-noauth.yml
+      - name: remove tiller noauth
+        run: kind delete cluster --name=tillernoauth
+      - name: build ssh to create pod multi node
+        run: ansible-playbook ssh-to-create-pods-multi-node.yml
+      - name: remove ssh to create pod multi node
+        run: kind delete cluster --name=sshcpmn
